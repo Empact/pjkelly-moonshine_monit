@@ -71,21 +71,23 @@ set mail-format { from: monit@<%= configuration[:domain] || (Facter.to_hash["hos
 ## service defined in this file has errors. Alerts may be restricted on 
 ## events by using a filter as in the second example below. 
 #
-<%- if options[:alerts][:alert_email] -%>
+<% if options[:alerts] %>
+<% if options[:alerts][:alert_email] %>
 set alert <%= options[:alerts][:alert_email] %> # receive all alerts
-<%- end -%>
-<%- if options[:alerts][:timeout_email] -%>
+<% end %>
+<% if options[:alerts][:timeout_email] %>
 set alert <%= options[:alerts][:timeout_email] %> only on { timeout } # receive just service-
                                                                       # timeout alert
-<%- end -%>
+<% end %>
+<% end %>
 ## Monit has an embedded web server which can be used to view status of 
 ## services monitored, the current configuration, actual services parameters
 ## and manage services from a web interface.
 #
 # User and password are required to access the monit gui
-<%- if options[:gui] && options[:gui][:user] && options[:gui][:password] -%>
+<% if options[:gui] && options[:gui][:user] && options[:gui][:password] %>
 set httpd port <%= options[:gui][:port] || 9001 %> and
     allow "<%= options[:gui][:user] %>":<%= options[:gui][:password] %>
-<%- end -%>
+<% end %>
 
 include /etc/monit.d/*
