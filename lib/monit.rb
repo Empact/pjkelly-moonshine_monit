@@ -19,7 +19,7 @@ module Monit
       :mode => '644',
       :require => package('monit')
 
-    file '/etc/init.d/monit'
+    file '/etc/init.d/monit',
       :mode => '744',
       :require => package('monit')
 
