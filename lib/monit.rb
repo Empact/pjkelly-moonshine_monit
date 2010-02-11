@@ -19,6 +19,12 @@ module Monit
       :mode => '600',
       :require => package('monit')
 
+    file '/etc/monit.d', :ensure => :directory, :require => package('monit')
+    file '/etc/monit.d/apache', 
+      :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'apache'), binding), 
+      :mode => '600',
+      :require => file('/etc/monit.d')
+
     file '/etc/default/monit', 
       :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'startup')), 
       :mode => '644',
@@ -30,6 +36,7 @@ module Monit
 
     service 'monit', 
       :require => [
+        file('/etc/monit/monitrc'),
         file('/etc/init.d/monit'),
         file('/etc/default/monit')
       ], 
