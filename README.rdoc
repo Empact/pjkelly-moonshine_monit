@@ -1,0 +1,14 @@
+= Moonshine_Monit
+
+=== A plugin for Moonshine[http://github.com/railsmachine/moonshine]
+
+A plugin for installing and managing monit.
+
+=== Instructions
+
+* <tt>script/plugin install git://github.com/ACCOUNT/moonshine_monit.git</tt>
+* Configure settings if needed
+    configure(:monit => {:foo => true})
+* Include the plugin and recipe(s) in your Moonshine manifest
+    plugin :monit
+    recipe :monit
