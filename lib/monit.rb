@@ -16,12 +16,12 @@ module Monit
 
     file '/etc/monit/monitrc', 
       :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'monitrc'), binding), 
-      :mode => '700',
+      :mode => '600',
       :require => package('monit')
 
     file '/etc/default/monit', 
       :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'startup')), 
-      :mode => '700',
+      :mode => '644',
       :require => package('monit')
 
     file '/etc/init.d/monit',
