@@ -20,7 +20,7 @@ module Monit
       :require => package('monit')
 
     file '/etc/init.d/monit',
-      :mode => '744',
+      :mode => '755',
       :require => package('monit')
 
     service 'monit', 
