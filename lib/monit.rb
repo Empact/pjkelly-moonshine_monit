@@ -19,12 +19,20 @@ module Monit
       :mode => '644',
       :require => package('monit')
 
+    file '/etc/default/monit', 
+      :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'startup')), 
+      :mode => '644',
+      :require => package('monit')
+
     file '/etc/init.d/monit',
       :mode => '755',
       :require => package('monit')
 
     service 'monit', 
-      :require => file('/etc/init.d/monit'), 
+      :require => [
+        file('/etc/init.d/monit'),
+        file('/etc/default/monit')
+      ], 
       :enable => true, 
       :ensure => :running
   end
