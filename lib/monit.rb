@@ -11,10 +11,22 @@ module Monit
   #  recipe :monit
   def monit(options = {})
     package 'monit', :ensure => :installed
-    # define the recipe
-    # options specified with the configure method will be 
-    # automatically available here in the options hash.
-    #    options[:foo]   # => true
+
+    options = {}.merge!(options)
+
+    file '/etc/monit/monitrc', 
+      :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'monitrc'), binding), 
+      :mode => '644',
+      :require => package('monit')
+
+    file '/etc/init.d/monit'
+      :mode => '744',
+      :require => package('monit')
+
+    service 'monit', 
+      :require => file('/etc/init.d/monit'), 
+      :enable => true, 
+      :ensure => :running
   end
   
 end
