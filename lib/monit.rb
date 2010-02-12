@@ -17,7 +17,7 @@ module Monit
     file '/etc/monit/monitrc', 
       :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'monitrc'), binding), 
       :mode => '600',
-      :owner => 'root'
+      :owner => 'root',
       :require => package('monit'),
       :before => service('monit'),
       :notify => service('monit')
