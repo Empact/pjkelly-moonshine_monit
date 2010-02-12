@@ -17,9 +17,18 @@ module Monit
     file '/etc/monit/monitrc', 
       :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'monitrc'), binding), 
       :mode => '600',
-      :require => package('monit')
+      :owner => 'root'
+      :require => package('monit'),
+      :before => service('monit'),
+      :notify => service('monit')
 
-    file '/etc/monit.d', :ensure => :directory, :require => package('monit')
+    file '/etc/monit.d', 
+      :ensure => :directory,
+      :mode   => 644,
+      :owner  => 'root',
+      :group  => 'root',
+      :before => service("monit")
+
     file '/etc/monit.d/apache', 
       :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'apache'), binding), 
       :mode => '600',
@@ -28,20 +37,19 @@ module Monit
     file '/etc/default/monit', 
       :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'startup')), 
       :mode => '644',
-      :require => package('monit')
+      :before => service("monit")
 
     file '/etc/init.d/monit',
       :mode => '755',
-      :require => package('monit')
+      :owner  => 'root',
+      :group  => 'root',
+      :before => service("monit")
 
     service 'monit', 
-      :require => [
-        file('/etc/monit/monitrc'),
-        file('/etc/init.d/monit'),
-        file('/etc/default/monit')
-      ], 
+      :require => package('monit'),
       :enable => true, 
-      :ensure => :running
+      :ensure => :running,
+      :hasstatus => true
   end
-  
+
 end
