@@ -23,7 +23,7 @@ module Monit
 
     file '/etc/monit.d', 
       :ensure => :directory,
-      :mode   => 644,
+      :mode   => 755,
       :owner => configuration[:user],
       :group => configuration[:group] || configuration[:user],
       :before => service("monit")
