@@ -51,8 +51,7 @@ module Monit
     service 'monit', 
       :require => package('monit'),
       :enable => true, 
-      :ensure => :running,
-      :hasstatus => true
+      :ensure => :running
   end
 
 end
