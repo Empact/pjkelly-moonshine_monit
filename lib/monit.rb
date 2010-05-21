@@ -12,8 +12,6 @@ module Monit
   def monit(options = {})
     package 'monit', :ensure => :installed
 
-    options = {}.merge!(options)
-
     file '/etc/monit/monitrc', 
       :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'monitrc'), binding), 
       :mode => '600',
