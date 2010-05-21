@@ -17,7 +17,6 @@ module Monit
     file '/etc/monit/monitrc', 
       :content => template(File.join(File.dirname(__FILE__), '..', 'templates', 'monitrc'), binding), 
       :mode => '600',
-      :owner => 'root',
       :require => package('monit'),
       :before => service('monit'),
       :notify => service('monit')
@@ -25,8 +24,6 @@ module Monit
     file '/etc/monit.d', 
       :ensure => :directory,
       :mode   => 644,
-      :owner  => 'root',
-      :group  => 'root',
       :before => service("monit")
 
     file '/etc/monit.d/apache', 
@@ -41,8 +38,6 @@ module Monit
 
     file '/etc/init.d/monit',
       :mode => '755',
-      :owner  => 'root',
-      :group  => 'root',
       :before => service("monit")
 
     service 'monit', 
