@@ -88,7 +88,7 @@ set alert <%= options[:alerts][:timeout_email] %> only on { timeout } # receive 
 set httpd port <%= (options[:gui] && options[:gui][:port]) || 2812 %>
   allow localhost
 
-<% if options[:gui][:user] && options[:gui][:password] %>
+<% if options[:gui] && options[:gui][:user] && options[:gui][:password] %>
 set httpd port <%= options[:gui][:port] || 9001 %> and
     allow "<%= options[:gui][:user] %>":<%= options[:gui][:password] %>
 <% end %>
