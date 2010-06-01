@@ -12,6 +12,7 @@ stop program = "/etc/init.d/apache2 stop"
 if cpu is greater than 60% for 2 cycles then alert
 if cpu > 80% for 5 cycles then restart
 if totalmem > 200.0 MB for 5 cycles then restart
+if totalmem < 1.0 MB for 5 cycles then restart
 if children > 250 then restart
 if loadavg(5min) greater than 10 for 8 cycles then stop
 if 3 restarts within 5 cycles then timeout
