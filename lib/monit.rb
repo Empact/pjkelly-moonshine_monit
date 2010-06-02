@@ -48,6 +48,11 @@ module Monit
       :group => configuration[:group] || configuration[:user],
       :before => service("monit")
 
+    exec 'restart_monit',
+      :command => 'monit reload',
+      :require => file('/etc/init.d/monit'),
+      :refreshonly => true
+
     service 'monit', 
       :require => package('monit'),
       :enable => true, 
